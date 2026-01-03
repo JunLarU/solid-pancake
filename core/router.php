@@ -13,11 +13,17 @@ if($position !== false){
 }
 //echo $request;
 switch ($request) {
+    case 'api/users/signup':
+        $data = json_decode(file_get_contents('php://input'), true);
+        signupUser($data);
+        break;
+
     case 'api/users/login':
-        require_once 'responders/users.php';
         $data = json_decode(file_get_contents('php://input'), true);
         loginUser($data);
         break;
     default:
-    break;
+        http_response_code(404);
+        echo json_encode(["error" => "Endpoint no encontrado"]);
+        break;
 }
