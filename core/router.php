@@ -4,6 +4,8 @@ require_once dirname(__DIR__) . '/responders/users.php';
 require_once dirname(__DIR__) . '/responders/ingredientes.php';
 require_once dirname(__DIR__) . '/responders/productos.php';
 require_once dirname(__DIR__) . '/responders/menu.php';
+require_once dirname(__DIR__) . '/responders/productos_especiales.php';
+require_once dirname(__DIR__) . '/responders/avisos.php'; // NUEVO: agregamos avisos
 
 $request = $_SERVER['REQUEST_URI'];
 if ($request[0] == '/') {
@@ -94,10 +96,29 @@ switch ($request) {
         handleMenusRequest();
         break;
     case 'api/menus/verificar':
-        require_once dirname(__DIR__) . '/responders/menu.php';
         $fecha   = $_GET['fecha'] ?? '';
         $horario = $_GET['horario'] ?? '';
         verificarMenuExistente($fecha, $horario);
+        break;
+
+    case 'api/productos-especiales':
+        handleProductosEspecialesRequest();
+        break;
+
+    // NUEVA RUTA: Avisos
+    case 'api/avisos':
+        handleAvisosRequest();
+        break;
+
+    // En tu switch statement, agrega:
+    case 'api/estadisticas':
+        require_once dirname(__DIR__) . '/responders/estadisticas.php';
+        break;
+
+    // NUEVA RUTA: Endpoints para usuarios normales
+    case strpos($request, 'api/normaluser/') === 0:
+        require_once dirname(__DIR__) . '/responders/normaluser.php';
+        handleNormalUserRequest();
         break;
 
     default:
