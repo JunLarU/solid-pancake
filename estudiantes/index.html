@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CAFI - Menú del Estudiante</title>
+  <!-- Servir este archivo mediante Apache: http://localhost/cafi_menu_web/ -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <h1>🎓 CAFI</h1>
+      <p>Panel del Estudiante</p>
+    </div>
+
+    <div class="header-actions">
+      <span id="welcome">👋 Bienvenido</span>
+      <button id="refreshAll" class="btn btn-secondary">↻ Actualizar</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <nav class="tabs" aria-label="Secciones">
+      <button class="tab active" data-tab="menu">📅 Menú semanal</button>
+      <button class="tab" data-tab="avisos">📢 Avisos</button>
+      <button class="tab" data-tab="especiales">⭐ Especiales</button>
+    </nav>
+
+    <section id="panel-menu" class="panel active">
+      <div class="toolbar">
+        <div>
+          <h2 id="weekTitle">Semana actual</h2>
+          <p id="weekRange" class="muted"></p>
+        </div>
+
+        <div class="toolbar-controls">
+          <label>
+            Horario
+            <select id="scheduleFilter">
+              <option value="Todos">Todos</option>
+              <option value="Desayuno">Desayuno</option>
+              <option value="Comida">Comida</option>
+            </select>
+          </label>
+
+          <button id="prevWeek" class="btn btn-secondary">◀ Semana anterior</button>
+          <button id="todayWeek" class="btn btn-light">Semana actual</button>
+          <button id="nextWeek" class="btn btn-primary">Semana siguiente ▶</button>
+        </div>
+      </div>
+
+      <div id="menuStatus" class="status loading">Cargando menú...</div>
+      <div id="menuContainer" class="day-list"></div>
+    </section>
+
+    <section id="panel-avisos" class="panel">
+      <div class="toolbar">
+        <div>
+          <h2>📢 Avisos</h2>
+          <p class="muted">Información vigente de la cafetería y Cafecito.</p>
+        </div>
+
+        <label>
+          Filtrar por
+          <select id="noticeFilter">
+            <option value="Todos">Todos</option>
+            <option value="Cafetería">Cafetería</option>
+            <option value="Cafecito">Cafecito</option>
+            <option value="Importantes">Importantes</option>
+          </select>
+        </label>
+      </div>
+
+      <div id="noticeStatus" class="status loading">Cargando avisos...</div>
+      <div id="noticeContainer" class="notice-list"></div>
+    </section>
+
+    <section id="panel-especiales" class="panel">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">PROMOCIONES</span>
+          <h2>⭐ Ofertas y productos especiales</h2>
+          <p class="muted">Promociones vigentes disponibles en CAFI.</p>
+        </div>
+      </div>
+
+      <div id="specialStatus" class="status loading">Cargando promociones...</div>
+      <div id="specialContainer" class="special-grid"></div>
+    </section>
+  </main>
+
+  <div id="productModal" class="modal" aria-hidden="true">
+    <div class="modal-backdrop" data-close-modal></div>
+    <article class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal-close" data-close-modal aria-label="Cerrar">×</button>
+      <div id="modalContent"></div>
+    </article>
+  </div>
+
+  <template id="emptyTemplate">
+    <div class="empty-state">
+      <div class="empty-icon">🍽️</div>
+      <h3>Sin información disponible</h3>
+      <p>No hay contenido para mostrar.</p>
+    </div>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>

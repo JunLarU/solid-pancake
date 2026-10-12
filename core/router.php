@@ -6,8 +6,12 @@ require_once dirname(__DIR__) . '/responders/productos.php';
 require_once dirname(__DIR__) . '/responders/menu.php';
 require_once dirname(__DIR__) . '/responders/productos_especiales.php';
 require_once dirname(__DIR__) . '/responders/avisos.php'; // NUEVO: agregamos avisos
+require_once dirname(__DIR__) . '/responders/upload_producto.php';
 
-$request = $_SERVER['REQUEST_URI'];
+$request = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+
+// Quitar / inicial y / final
+$request = trim($request, '/');
 if ($request[0] == '/') {
     $request = substr($request, 1);
 }
@@ -76,7 +80,11 @@ switch ($request) {
             updateIngrediente($data);
         }
         break;
+    case 'api/productos/imagen':
 
+        uploadProductoImagen();
+
+        break;
     // En tu index.php, actualiza la sección de productos:
     case 'api/productos':
         require_once dirname(__DIR__) . '/responders/productos.php';
@@ -119,6 +127,12 @@ switch ($request) {
     case strpos($request, 'api/normaluser/') === 0:
         require_once dirname(__DIR__) . '/responders/normaluser.php';
         handleNormalUserRequest();
+        break;
+
+    case 'menu':
+
+        require_once dirname(__DIR__) . '/estudiantes/estudiantes.php';
+
         break;
 
     default:
